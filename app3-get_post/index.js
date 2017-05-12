@@ -6,7 +6,16 @@ var app = express();
 app.use(bodyParser.json());
 
 
+app.get('/api/cars', function(req, res, next){
+	res.status(200).send(items);
+})
 
+app.post('/api/cars', function(req, res, next){
+	const newCar = req.body
+	items.push(newCar)
+	
+	res.status(200).send(newCar)
+})
 
 
 

@@ -4,6 +4,9 @@ var session = require('express-session');
 var port = 3000;
 var data = require('./data.js')
 
+var app = express();
+
+
 app.use(bodyParser.json());
 
 app.use(session({
@@ -12,11 +15,15 @@ app.use(session({
   resave: true
 }));
 
-var app = express();
 
 // Define your middleware function here (or in a separate middleware file if you like)
 
-
+var checkLogin = function(req, res, next) {
+  if (!req.session.currentUser){
+    res.status(400).send('User is not logged in')
+  }
+  next();
+};
 
 
 // Do not touch this endpoint
@@ -27,7 +34,7 @@ app.post('/login', function(req, res, next) {
 	} else {
 		res.status(200).send('please provide a username');
 	}
-	
+
 })
 
 
